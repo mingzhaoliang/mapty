@@ -63,6 +63,7 @@ export default function WorkoutForm() {
                 paddingBottom: 0,
                 marginTop: 0,
                 marginBottom: 0,
+                zIndex: -1,
             }}
             onSubmit={submitHandler}
         >

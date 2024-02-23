@@ -6,7 +6,7 @@ export default function Sidebar() {
     const workouts = useSelector(state => state.data.workouts);
 
     return (
-        <div className="h-screen flex flex-col basis-[30rem] bg-[#2d3439] pt-12 px-8 pb-16">
+        <div className="h-screen flex flex-col basis-3/12 max-w-[460px] bg-[#2d3439] pt-12 px-8 pb-16">
             <img src="/icons/logo.png" alt="Logo" draggable="false" className="h-[4rem] self-center mb-12" />
             <WorkoutForm />
             {workouts && workouts.length > 0 && (
