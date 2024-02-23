@@ -6,7 +6,7 @@ import { mapActions } from '../store/map-slice';
 const customIcon = new Icon({
     iconUrl: '/icons/marker.png',
     iconSize: [38, 38],
-    iconAnchor: [25, 50],
+    iconAnchor: [19, 38],
 });
 
 export default function LocationMarker() {

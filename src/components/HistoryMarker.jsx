@@ -6,7 +6,8 @@ import { useEffect } from "react";
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
     iconSize: [25, 41],
-    iconAnchor: [13, 0]
+    iconAnchor: [13, 41],
+    popupAnchor: [0, -41]
 });
 
 export default function HistoryMarker({ type, timestamp, position }) {
