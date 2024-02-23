@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { dataActions } from "../store/data-slice";
 
 const Stats = ({ icon, value, unit }) => {
     return (
@@ -10,8 +12,9 @@ const Stats = ({ icon, value, unit }) => {
     )
 }
 
-export default function WorkoutItem({ type, distance, duration, pace, cadence, elev_gain, timestamp, position }) {
+export default function WorkoutItem({ id, type, distance, duration, pace, cadence, elev_gain, timestamp, position }) {
     const date = new Date(timestamp).toLocaleString("en-US", { month: "long", day: "numeric" });
+    const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
 
     const mouseOverHandler = () => {
@@ -21,6 +24,10 @@ export default function WorkoutItem({ type, distance, duration, pace, cadence, e
     const mouseOutHandler = () => {
         setIsHovered(false);
     };
+
+    const deleteHandler = (id) => {
+        dispatch(dataActions.deleteWorkout(id))
+    }
 
     return (
         <li
@@ -51,7 +58,10 @@ export default function WorkoutItem({ type, distance, duration, pace, cadence, e
                 <button className="p-2 rounded-tr bg-rose-500 hover:bg-rose-600 transition-all h-1/2">
                     <img src="/icons/edit.png" alt="Edit" draggable="false" className="w-4 m-auto" />
                 </button>
-                <button className="p-2 rounded-br bg-slate-300 hover:bg-slate-400 transition-all h-1/2">
+                <button
+                    className="p-2 rounded-br bg-slate-300 hover:bg-slate-400 transition-all h-1/2"
+                    onClick={() => deleteHandler(id)}
+                >
                     <img src="/icons/bin.png" alt="Delete" draggable="false" className="w-4 m-auto" />
                 </button>
             </div>

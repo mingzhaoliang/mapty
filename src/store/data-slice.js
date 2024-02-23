@@ -12,7 +12,7 @@ const dataSlice = createSlice({
         updateWorkout(state, action) {
             state.workouts = action.payload;
         },
-        removeWorkout(state, action) {
+        deleteWorkout(state, action) {
             state.workouts = state.workouts.filter(workout => workout.id !== action.payload);
         },
         // setWeather(state, action) {
