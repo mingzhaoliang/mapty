@@ -24,19 +24,17 @@ export default function WorkoutItem({ type, distance, duration, pace, cadence, e
 
     return (
         <li
-            className={`relative max-h-24 bg-[#42484d] rounded cursor-pointer flex gap-3 border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
+            className={`relative max-h-24 bg-[#42484d] rounded cursor-pointer flex border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
             data-id="1234567890"
             onMouseOver={mouseOverHandler}
             onMouseOut={mouseOutHandler}
         >
-            <div className="p-4 flex flex-col flex-1 gap-2">
-                <h2 className="text-white font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
-                <div className="flex justify-between text-white gap-2">
-                    <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
-                    <Stats icon="⏱" value={duration} unit="min" />
-                    <Stats icon="⚡️" value={pace} unit={type === "running" ? "min/km" : "km/h"} />
-                    <Stats icon={type === "running" ? "🦶🏼" : "⛰"} value={cadence || elev_gain} unit={type === "running" ? "spm" : "m"} />
-                </div>
+            <div className="p-4 grid grid-cols-4-auto gap-2 text-white">
+                <h2 className="col-span-full font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
+                <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
+                <Stats icon="⏱" value={duration} unit="min" />
+                <Stats icon="⚡️" value={pace} unit={type === "running" ? "min/km" : "km/h"} />
+                <Stats icon={type === "running" ? "🦶🏼" : "⛰"} value={cadence || elev_gain} unit={type === "running" ? "spm" : "m"} />
             </div>
             <div
                 className="absolute top-0 right-0 flex flex-col max-w-8 transition-all"
