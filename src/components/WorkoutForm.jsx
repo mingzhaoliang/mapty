@@ -39,6 +39,7 @@ export default function WorkoutForm() {
         localStorage.setItem("workouts", JSON.stringify(updatedWorkouts));
         dispatch(dataActions.updateWorkout(updatedWorkouts));
         dispatch(mapActions.setClicked(false));
+        dispatch(mapActions.setPosition(null));
 
         formRef.current.reset();
     }

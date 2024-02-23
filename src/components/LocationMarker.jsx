@@ -11,6 +11,7 @@ const customIcon = new Icon({
 
 export default function LocationMarker() {
     const position = useSelector(state => state.map.position);
+    const isClicked = useSelector(state => state.map.isClicked);
     const dispatch = useDispatch();
 
     const map = useMapEvent('click', (e) => {
@@ -22,6 +23,6 @@ export default function LocationMarker() {
     });
 
     return (
-        position ? <Marker position={position} icon={customIcon} /> : null
+        position && isClicked ? <Marker position={position} icon={customIcon} /> : null
     );
 }
