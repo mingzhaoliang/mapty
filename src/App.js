@@ -4,9 +4,18 @@ import Map from './components/Map';
 import Sidebar from './components/Sidebar';
 import MyLocation from './components/MyLocation';
 import Loading from './components/Loading';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { dataActions } from './store/data-slice';
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const data = localStorage.getItem('workouts') || "[]";
+    dispatch(dataActions.updateWorkout(JSON.parse(data)));
+  }, [])
 
   return (
     <div className='flex'>

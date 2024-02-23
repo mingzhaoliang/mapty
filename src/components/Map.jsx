@@ -1,17 +1,14 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { Icon } from 'leaflet';
 import { useState, useEffect } from 'react';
 import LocationMarker from './LocationMarker';
 import Relocate from './Relocate';
+import { useSelector } from 'react-redux';
+import HistoryMarker from './HistoryMarker';
+
 
 export default function Map() {
     const [initialPosition, setInitialPosition] = useState(null);
-
-    const customIcon = new Icon({
-        iconUrl: '/icons/marker.png',
-        iconSize: [38, 38],
-        iconAnchor: [25, 50],
-    });
+    const workouts = useSelector(state => state.data.workouts);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((pos) => {
@@ -33,7 +30,8 @@ export default function Map() {
                         url="https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                     />
                     <Relocate />
-                    <LocationMarker customIcon={customIcon} />
+                    <LocationMarker />
+                    {workouts && workouts.map(({ type, timestamp, position }) => <HistoryMarker key={timestamp} type={type} timestamp={timestamp} position={position} />)}
                 </MapContainer>
             )}
         </>
