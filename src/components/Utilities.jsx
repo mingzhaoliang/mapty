@@ -47,7 +47,7 @@ export default function Utilities() {
         <>
             <div className="mb-8 flex justify-between">
                 <div className="flex items-center gap-2">
-                    <img src="/icons/sort.png" alt="Delete All" draggable="false" className="w-5 h-5 cursor-pointer" onClick={sortHandler} />
+                    <img src="/icons/sort.png" alt="Delete All" draggable="false" className="w-5 h-5 cursor-pointer transition-all hover:translate-y-px" onClick={sortHandler} />
                     <select ref={sortRef} name="sort" id="sort" className="outline-none bg-transparent rounded p-0.5 text-sm text-slate-300">
                         <option value="timestamp">Date</option>
                         <option value="distance">Distance</option>
@@ -55,7 +55,7 @@ export default function Utilities() {
                         <option value="pace">Pace</option>
                     </select>
                 </div>
-                <img src="/icons/delete-all.png" alt="Delete All" draggable="false" className="w-5 h-5 cursor-pointer" onClick={deleteAllHandler} />
+                <img src="/icons/delete-all.png" alt="Delete All" draggable="false" className="w-5 h-5 cursor-pointer transition-all hover:translate-y-px" onClick={deleteAllHandler} />
             </div>
             <Modal open={true && confirmDelete} onClose={cancelDeleteHandler}>
                 <div className="flex flex-col items-center gap-10">
