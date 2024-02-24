@@ -12,13 +12,15 @@ export default function Sidebar() {
             <img src="/icons/logo.png" alt="Logo" draggable="false" className="h-[4rem] self-center mb-12" />
             <WorkoutForm />
             {workouts && workouts.length > 0 && (
-                <ul className="flex flex-col gap-4 overflow-y-auto overflow-x-clip mb-4">
-                    {workouts.map(workout => (
-                        <WorkoutItem key={workout.id} item={workout} />
-                    ))}
-                </ul>
+                <>
+                    <ul className="flex flex-col gap-4 overflow-y-auto overflow-x-clip mb-4">
+                        {workouts.map(workout => (
+                            <WorkoutItem key={workout.id} item={workout} />
+                        ))}
+                    </ul>
+                    <Utilities />
+                </>
             )}
-            <Utilities />
             <Copyright />
         </div>
     )
