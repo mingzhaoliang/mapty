@@ -18,7 +18,7 @@ const Stats = ({ icon, value, unit }) => {
 export default function WorkoutItem({ item }) {
     const { id, type, distance, duration, pace, cadence, elev_gain, timestamp, position } = item;
 
-    const date = new Date(timestamp).toLocaleString("en-US", { month: "long", day: "numeric" });
+    const date = new Date(timestamp).toLocaleTimeString("en-AU", { month: "long", day: "numeric", hour: 'numeric', minute: '2-digit' });
     const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
     const isEditing = useSelector(state => state.data.isEditing);
