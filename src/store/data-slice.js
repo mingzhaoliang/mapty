@@ -12,7 +12,7 @@ const dataSlice = createSlice({
     name: 'data',
     initialState: initialState,
     reducers: {
-        updateWorkout(state, action) {
+        updateWorkouts(state, action) {
             const updatedWorkouts = [...action.payload];
             const sortedWorkouts = updatedWorkouts.sort((a, b) => a.timestamp - b.timestamp);
 

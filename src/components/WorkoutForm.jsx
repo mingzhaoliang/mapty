@@ -60,7 +60,7 @@ export default function WorkoutForm({ isUpdate, workoutItem }) {
         }
 
         localStorage.setItem("workouts", JSON.stringify(updatedWorkouts));
-        dispatch(dataActions.updateWorkout(updatedWorkouts));
+        dispatch(dataActions.updateWorkouts(updatedWorkouts));
 
         formRef.current.reset();
     }

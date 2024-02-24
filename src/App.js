@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const data = localStorage.getItem('workouts') || "[]";
-    dispatch(dataActions.updateWorkout(JSON.parse(data)));
+    dispatch(dataActions.updateWorkouts(JSON.parse(data)));
   }, [])
 
   return (
