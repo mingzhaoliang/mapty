@@ -20,7 +20,7 @@ export default function HistoryMarker({ type, timestamp, position }) {
 
     return (
         <Marker ref={marker} position={position} icon={defaultIcon}>
-            <Popup autoClose={false} closeOnClick={false} className={`${type}-popup`}>
+            <Popup autoClose={false} closeOnClick={false} autoPan={false} className={`${type}-popup`}>
                 <p className="font-medium">{type === "running" ? "🏃‍♂️ Running" : "🚴‍♀️ Cycling"} on {date}</p>
             </Popup>
         </Marker>
