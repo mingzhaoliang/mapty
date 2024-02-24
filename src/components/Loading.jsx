@@ -7,7 +7,7 @@ export default function Loading() {
 
     return (
         <Modal open={isRelocating} classes="max-w-xs">
-            <div className='flex flex-col justify-center items-center gap-8 pointer-events-none'>
+            <div className='m-4 flex flex-col justify-center items-center gap-8 pointer-events-none'>
                 <Spinner />
                 <p className='tracking-wide text-center'>Locating to current position.<br />Please wait...</p>
             </div>
