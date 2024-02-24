@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     position: null,
-    isClicked: false,
+    isAdding: false,
     relocate: false,
 };
 
@@ -13,8 +13,8 @@ const mapSlice = createSlice({
         setPosition(state, action) {
             state.position = action.payload;
         },
-        setClicked(state, action) {
-            state.isClicked = action.payload;
+        setIsAdding(state, action) {
+            state.isAdding = action.payload;
         },
         setRelocate(state, action) {
             state.relocate = action.payload;
