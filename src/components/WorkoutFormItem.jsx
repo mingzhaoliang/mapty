@@ -1,11 +1,18 @@
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import slugify from 'slugify';
+import { dataActions } from '../store/data-slice';
 
 export default function WorkoutFormItem({ label, isSelect, onSelect, placeholder, value }) {
     const slug = slugify(label, { lower: true, replacement: "_" });
     const classes = "w-full p-1 rounded bg-[#d6dee0] transition-all text-sm";
     const inputField = useRef();
+    const dispatch = useDispatch();
+
+    const inputBlurHandler = () => {
+        dispatch(dataActions.setInvalidInput(inputField.current.value <= 0));
+    };
 
     const changeHandler = (e) => {
         onSelect(e);
@@ -27,6 +34,7 @@ export default function WorkoutFormItem({ label, isSelect, onSelect, placeholder
             {!isSelect && (
                 <input
                     ref={inputField}
+                    onBlur={inputBlurHandler}
                     id={slug}
                     name={slug}
                     className={classes}
