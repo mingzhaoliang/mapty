@@ -10,7 +10,7 @@ export default function Sidebar() {
             <img src="/icons/logo.png" alt="Logo" draggable="false" className="h-[4rem] self-center mb-12" />
             <WorkoutForm />
             {workouts && workouts.length > 0 && (
-                <ul className="flex flex-col gap-4 overflow-auto mb-12">
+                <ul className="flex flex-col gap-4 overflow-y-auto overflow-x-clip mb-12">
                     {workouts.map(workout => (
                         <WorkoutItem key={workout.id} {...workout} />
                     ))}
