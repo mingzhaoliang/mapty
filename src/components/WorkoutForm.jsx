@@ -4,6 +4,7 @@ import WorkoutFormItem from "./WorkoutFormItem";
 import { mapActions } from "../store/map-slice";
 import { dataActions } from "../store/data-slice";
 import { useRef } from "react";
+import { API_KEY } from '../api-key';
 
 export default function WorkoutForm({ isUpdate, workoutItem }) {
     const formRef = useRef();
@@ -13,8 +14,17 @@ export default function WorkoutForm({ isUpdate, workoutItem }) {
     const dispatch = useDispatch();
 
     const [workoutType, setWorkoutType] = useState("running");
+    const [isError, setIsError] = useState(false);
 
     const { id, type, distance, duration, cadence, elev_gain } = workoutItem || {};
+
+
+    const fetchAddress = async (lat, lng) => {
+        const response = await fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${lng}&api_key=${API_KEY}`);
+        const place = await response.json();
+
+        return place.address
+    }
 
     const selectHandler = (e) => {
         setWorkoutType(e.target.value);
@@ -28,7 +38,7 @@ export default function WorkoutForm({ isUpdate, workoutItem }) {
         }
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         const fd = new FormData(e.target);
         const data = Object.fromEntries(fd);
@@ -54,7 +64,12 @@ export default function WorkoutForm({ isUpdate, workoutItem }) {
             data.position = position;
             data.pace = pace;
 
+            const { city, country } = await fetchAddress(...position);
+            data.city = city || "";
+            data.country = country;
+
             updatedWorkouts = [...workouts, data];
+
             dispatch(mapActions.setIsAdding(false));
             dispatch(mapActions.setPosition(null));
         }

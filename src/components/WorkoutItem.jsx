@@ -16,7 +16,7 @@ const Stats = ({ icon, value, unit }) => {
 }
 
 export default function WorkoutItem({ item }) {
-    const { id, type, distance, duration, pace, cadence, elev_gain, timestamp, position } = item;
+    const { id, type, distance, duration, pace, cadence, elev_gain, timestamp, position, city, country } = item;
     const date = new Date(timestamp).toLocaleTimeString("en-AU", { month: "long", day: "numeric", hour: 'numeric', minute: '2-digit' });
 
     const dispatch = useDispatch();
@@ -68,10 +68,16 @@ export default function WorkoutItem({ item }) {
                 onMouseOut={mouseOutHandler}
             >
                 <div
-                    className="p-4 grid grid-cols-2 xl:grid-cols-4-auto gap-x-4 gap-y-2 xl:gap-2 text-white overflow-auto w-full grow"
+                    className="p-4 grid grid-cols-2 xl:grid-cols-4-auto gap-x-4 gap-y-3 xl:gap-3 text-white overflow-auto w-full grow"
                     onClick={clickHandler}
                 >
                     <h2 className="col-span-full font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
+                    {country && (
+                        <div className="col-span-full flex">
+                            <img src="/icons/location.png" alt="Location" draggable="false" className="w-4 mr-1" />
+                            <p className="text-xs">{`${city ? city + ", " : ""}${country}`}</p>
+                        </div>
+                    )}
                     <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
                     <Stats icon="⏱" value={duration} unit="min" />
                     <Stats icon="⚡️" value={pace} unit={type === "running" ? "min/km" : "km/h"} />
