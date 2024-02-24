@@ -11,7 +11,10 @@ const dataSlice = createSlice({
     initialState: initialState,
     reducers: {
         updateWorkout(state, action) {
-            state.workouts = action.payload;
+            const updatedWorkouts = [...action.payload];
+            const sortedWorkouts = updatedWorkouts.sort((a, b) => a.timestamp - b.timestamp);
+
+            state.workouts = sortedWorkouts;
         },
         deleteWorkout(state, action) {
             state.workouts = state.workouts.filter(workout => workout.id !== action.payload);
