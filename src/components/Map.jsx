@@ -4,6 +4,7 @@ import LocationMarker from './LocationMarker';
 import Relocate from './Relocate';
 import { useSelector } from 'react-redux';
 import HistoryMarker from './HistoryMarker';
+import LocateWorkout from './LocateWorkout';
 
 
 export default function Map() {
@@ -30,6 +31,7 @@ export default function Map() {
                         url="https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                     />
                     <Relocate />
+                    <LocateWorkout />
                     <LocationMarker />
                     {workouts && workouts.map(({ type, timestamp, position }) => <HistoryMarker key={timestamp} type={type} timestamp={timestamp} position={position} />)}
                 </MapContainer>

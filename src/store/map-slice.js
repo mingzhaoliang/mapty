@@ -4,6 +4,7 @@ const initialState = {
     position: null,
     isAdding: false,
     relocate: false,
+    selectedWorkoutPosition: null,
 };
 
 const mapSlice = createSlice({
@@ -18,6 +19,9 @@ const mapSlice = createSlice({
         },
         setRelocate(state, action) {
             state.relocate = action.payload;
+        },
+        setSelectedWorkoutPosition(state, action) {
+            state.selectedWorkoutPosition = action.payload;
         },
     },
 });

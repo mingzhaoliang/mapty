@@ -17,14 +17,18 @@ const Stats = ({ icon, value, unit }) => {
 
 export default function WorkoutItem({ item }) {
     const { id, type, distance, duration, pace, cadence, elev_gain, timestamp, position } = item;
-
     const date = new Date(timestamp).toLocaleTimeString("en-AU", { month: "long", day: "numeric", hour: 'numeric', minute: '2-digit' });
+
     const dispatch = useDispatch();
-    const [isHovered, setIsHovered] = useState(false);
     const isEditing = useSelector(state => state.data.isEditing);
+    const selectedWorkoutPosition = useSelector(state => state.map.selectedWorkoutPosition);
+    // const workouts = useSelector(state => state.data.workouts);
 
+    const [isHovered, setIsHovered] = useState(false);
 
-    const workouts = useSelector(state => state.data.workouts);
+    const clickHandler = () => {
+        dispatch(mapActions.setSelectedWorkoutPosition(position));
+    };
 
     const mouseOverHandler = () => {
         setIsHovered(true);
@@ -65,6 +69,7 @@ export default function WorkoutItem({ item }) {
             >
                 <div
                     className="p-4 grid grid-cols-2 xl:grid-cols-4-auto gap-x-4 gap-y-2 xl:gap-2 text-white overflow-auto w-full grow"
+                    onClick={clickHandler}
                 >
                     <h2 className="col-span-full font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
                     <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
