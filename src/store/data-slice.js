@@ -4,7 +4,8 @@ const initialState = {
     workouts: [],
     isEditing: null,
     isAscending: true,
-    lastSortValue: null
+    lastSortValue: null,
+    invalidInput: false,
     // weather: null,
 }
 
@@ -14,7 +15,7 @@ const dataSlice = createSlice({
     reducers: {
         updateWorkouts(state, action) {
             const updatedWorkouts = [...action.payload];
-            const sortedWorkouts = updatedWorkouts.sort((a, b) => a.timestamp - b.timestamp);
+            const sortedWorkouts = updatedWorkouts.sort((a, b) => b.timestamp - a.timestamp);
 
             state.workouts = sortedWorkouts;
         },
@@ -42,6 +43,9 @@ const dataSlice = createSlice({
         },
         removeIsEditing(state, action) {
             state.isEditing = null;
+        },
+        setInvalidInput(state, action) {
+            state.invalidInput = action.payload;
         },
         // setWeather(state, action) {
         //     state.weather = action.payload;
