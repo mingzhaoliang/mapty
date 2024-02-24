@@ -15,7 +15,7 @@ export default function Modal({ children, open, onClose, classes }) {
     return createPortal((
         <dialog
             ref={dialog}
-            className={`z-10 bg-white rounded-md shadow-sm p-10 min-w-72 m-auto ${classes}`}
+            className={`outline-none z-10 bg-white rounded-md shadow-sm p-8 min-w-72 m-auto ${classes}`}
             onClose={onClose}
         >
             {children}
