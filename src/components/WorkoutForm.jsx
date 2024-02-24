@@ -5,11 +5,11 @@ import { mapActions } from "../store/map-slice";
 import { dataActions } from "../store/data-slice";
 import { useRef } from "react";
 
-export default function WorkoutForm() {
+export default function WorkoutForm({ isUpdate, id, type, distance, duration, cadence, elev_gain }) {
     const formRef = useRef();
     const workouts = useSelector(state => state.data.workouts);
     const position = useSelector(state => state.map.position);
-    const isClicked = useSelector(state => state.map.isClicked);
+    const isAdding = useSelector(state => state.map.isAdding);
     const dispatch = useDispatch();
 
     const [workoutType, setWorkoutType] = useState("running");
@@ -19,7 +19,11 @@ export default function WorkoutForm() {
     }
 
     const cancelHandler = () => {
-        dispatch(mapActions.setClicked(false));
+        if (isUpdate) {
+            dispatch(dataActions.setIsEditing(null));
+        } else {
+            dispatch(mapActions.setIsAdding(false));
+        }
     }
 
     const submitHandler = (e) => {
@@ -38,7 +42,7 @@ export default function WorkoutForm() {
         const updatedWorkouts = [...workouts, data];
         localStorage.setItem("workouts", JSON.stringify(updatedWorkouts));
         dispatch(dataActions.updateWorkout(updatedWorkouts));
-        dispatch(mapActions.setClicked(false));
+        dispatch(mapActions.setIsAdding(false));
         dispatch(mapActions.setPosition(null));
 
         formRef.current.reset();
@@ -47,7 +51,7 @@ export default function WorkoutForm() {
     useEffect(() => {
         document.addEventListener("keyup", (e) => {
             if (e.key === "Escape") {
-                dispatch(mapActions.setClicked(false));
+                dispatch(mapActions.setIsAdding(false));
             }
         })
     }, [])
@@ -55,8 +59,8 @@ export default function WorkoutForm() {
     return (
         <form
             ref={formRef}
-            className="bg-[#42484d] rounded p-4 mb-4 flex flex-col gap-y-1 transition-all duration-400"
-            style={isClicked ? {} : {
+            className={`bg-[#42484d] rounded p-4 flex flex-col gap-y-1 transition-all duration-400 ${!isUpdate ? "mb-4" : ""}`}
+            style={(isAdding || isUpdate) ? {} : {
                 transform: "translateY(-4rem)",
                 opacity: 0,
                 height: 0,
@@ -69,11 +73,11 @@ export default function WorkoutForm() {
             onSubmit={submitHandler}
         >
             <div className="grid grid-cols-2 gap-y-2 gap-x-8">
-                <WorkoutFormItem label="Type" isSelect onSelect={selectHandler} />
-                <WorkoutFormItem label="Distance" placeholder="km" />
-                <WorkoutFormItem label="Duration" placeholder="min" />
-                {workoutType === "running" && <WorkoutFormItem label="Cadence" placeholder="step/min" />}
-                {workoutType !== "running" && <WorkoutFormItem label="Elev Gain" placeholder="meters" />}
+                <WorkoutFormItem label="Type" isSelect onSelect={selectHandler} value={type} />
+                <WorkoutFormItem label="Distance" placeholder="km" value={distance} />
+                <WorkoutFormItem label="Duration" placeholder="min" value={duration} />
+                {workoutType === "running" && <WorkoutFormItem label="Cadence" placeholder="step/min" value={cadence} />}
+                {workoutType !== "running" && <WorkoutFormItem label="Elev Gain" placeholder="meters" value={elev_gain} />}
             </div>
             <div className="mt-2 flex justify-end">
                 <div className="w-1/2 flex gap-x-4">
@@ -84,7 +88,7 @@ export default function WorkoutForm() {
                     >
                         Cancel
                     </button>
-                    <button type="submit" className="text-sm bg-green-500 border border-green-500 text-white rounded w-full py-1 transition-all hover:bg-green-600 hover:border-green-600">Add</button>
+                    <button type="submit" className="text-sm bg-green-500 border border-green-500 text-white rounded w-full py-1 transition-all hover:bg-green-600 hover:border-green-600">{isUpdate ? "Update" : "Add"}</button>
                 </div>
             </div>
         </form>

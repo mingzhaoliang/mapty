@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { dataActions } from "../store/data-slice";
+import WorkoutForm from "./WorkoutForm";
+import { useSelector } from "react-redux";
+import { mapActions } from "../store/map-slice";
 
 const Stats = ({ icon, value, unit }) => {
     return (
@@ -16,6 +19,7 @@ export default function WorkoutItem({ id, type, distance, duration, pace, cadenc
     const date = new Date(timestamp).toLocaleString("en-US", { month: "long", day: "numeric" });
     const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
+    const isEditing = useSelector(state => state.data.isEditing);
 
     const mouseOverHandler = () => {
         setIsHovered(true);
@@ -29,42 +33,74 @@ export default function WorkoutItem({ id, type, distance, duration, pace, cadenc
         dispatch(dataActions.deleteWorkout(id))
     }
 
-    return (
-        <li
-            className={`relative max-h-28 bg-[#42484d] rounded cursor-pointer border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
-            data-id="1234567890"
-            onMouseOver={mouseOverHandler}
-            onMouseOut={mouseOutHandler}
-        >
-            <div className="p-4 grid grid-cols-2 lg:grid-cols-4-auto gap-2 text-white overflow-scroll">
-                <h2 className="col-span-full font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
-                <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
-                <Stats icon="⏱" value={duration} unit="min" />
-                <Stats icon="⚡️" value={pace} unit={type === "running" ? "min/km" : "km/h"} />
-                <Stats icon={type === "running" ? "🦶🏼" : "⛰"} value={cadence || elev_gain} unit={type === "running" ? "spm" : "m"} />
-            </div>
-            <div
-                className="absolute top-0 right-0 flex flex-col max-w-8 transition-all h-full"
-                style={
-                    isHovered
-                        ? { transform: "translateX(0)" }
-                        : {
-                            transform: "translateX(100%)",
-                            opacity: 0,
-                            pointerEvents: "none",
-                        }
-                }
+    const editHandler = (id) => {
+        dispatch(mapActions.setIsAdding(false));
+        dispatch(dataActions.setIsEditing(id));
+        setIsHovered(false);
+    }
+
+    let content;
+
+    if (isEditing === id) {
+        content = (
+            <li
+                className={`relative bg-[#42484d] rounded cursor-pointer border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
             >
-                <button className="p-2 rounded-tr bg-rose-500 hover:bg-rose-600 transition-all h-1/2">
-                    <img src="/icons/edit.png" alt="Edit" draggable="false" className="w-4 m-auto" />
-                </button>
-                <button
-                    className="p-2 rounded-br bg-slate-300 hover:bg-slate-400 transition-all h-1/2"
-                    onClick={() => deleteHandler(id)}
+                <WorkoutForm isUpdate type={type} distance={distance} duration={duration} cadence={cadence} elev_gain={elev_gain} />
+            </li>
+        )
+    } else {
+        content = (
+            <li
+                className={`relative flex bg-[#42484d] rounded cursor-pointer border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
+                style={isHovered ? { width: "100%", } : { width: "calc(100% + 2rem)", }}
+                data-id="1234567890"
+                onMouseOver={mouseOverHandler}
+                onMouseOut={mouseOutHandler}
+            >
+                <div
+                    className="p-4 grid grid-cols-2 xl:grid-cols-4-auto gap-x-4 gap-y-2 xl:gap-2 text-white overflow-auto w-full grow"
                 >
-                    <img src="/icons/bin.png" alt="Delete" draggable="false" className="w-4 m-auto" />
-                </button>
-            </div>
-        </li>
+                    <h2 className="col-span-full font-semibold">{type === "running" ? "Running" : "Cycling"} on {date}</h2>
+                    <Stats icon={type === "running" ? "🏃‍♂️" : "🚴‍♀️"} value={distance} unit="km" />
+                    <Stats icon="⏱" value={duration} unit="min" />
+                    <Stats icon="⚡️" value={pace} unit={type === "running" ? "min/km" : "km/h"} />
+                    <Stats icon={type === "running" ? "🦶🏼" : "⛰"} value={cadence || elev_gain} unit={type === "running" ? "spm" : "m"} />
+                </div>
+                <div
+                    className="flex flex-col w-8 transition-all h-full"
+                    style={
+                        isHovered
+                            ? {
+                                transform: "translateX(0)",
+                            }
+                            : {
+                                transform: "translateX(100%)",
+                                opacity: 0,
+                                pointerEvents: "none",
+                            }
+                    }
+                >
+                    <button
+                        className="p-2 rounded-tr bg-rose-500 hover:bg-rose-600 transition-all h-1/2"
+                        onClick={() => editHandler(id)}
+                    >
+                        <img src="/icons/edit.png" alt="Edit" draggable="false" className="w-4 m-auto" />
+                    </button>
+                    <button
+                        className="p-2 rounded-br bg-slate-300 hover:bg-slate-400 transition-all h-1/2"
+                        onClick={() => deleteHandler(id)}
+                    >
+                        <img src="/icons/bin.png" alt="Delete" draggable="false" className="w-4 m-auto" />
+                    </button>
+                </div>
+            </li>
+        )
+    }
+
+    return (
+        <>
+            {content}
+        </>
     )
 }

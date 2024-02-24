@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     workouts: [],
+    isEditing: null,
     // weather: null,
 }
 
@@ -15,6 +16,12 @@ const dataSlice = createSlice({
         deleteWorkout(state, action) {
             state.workouts = state.workouts.filter(workout => workout.id !== action.payload);
         },
+        setIsEditing(state, action) {
+            state.isEditing = action.payload;
+        },
+        removeIsEditing(state, action) {
+            state.isEditing = null;
+        }
         // setWeather(state, action) {
         //     state.weather = action.payload;
         // },
