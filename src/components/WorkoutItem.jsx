@@ -15,11 +15,16 @@ const Stats = ({ icon, value, unit }) => {
     )
 }
 
-export default function WorkoutItem({ id, type, distance, duration, pace, cadence, elev_gain, timestamp, position }) {
+export default function WorkoutItem({ item }) {
+    const { id, type, distance, duration, pace, cadence, elev_gain, timestamp, position } = item;
+
     const date = new Date(timestamp).toLocaleString("en-US", { month: "long", day: "numeric" });
     const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
     const isEditing = useSelector(state => state.data.isEditing);
+
+
+    const workouts = useSelector(state => state.data.workouts);
 
     const mouseOverHandler = () => {
         setIsHovered(true);
@@ -46,7 +51,7 @@ export default function WorkoutItem({ id, type, distance, duration, pace, cadenc
             <li
                 className={`relative bg-[#42484d] rounded cursor-pointer border-l-4 transition-all ${type === "running" ? "border-emerald-400" : "border-amber-400"}`}
             >
-                <WorkoutForm isUpdate type={type} distance={distance} duration={duration} cadence={cadence} elev_gain={elev_gain} />
+                <WorkoutForm isUpdate workoutItem={item} />
             </li>
         )
     } else {

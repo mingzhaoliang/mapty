@@ -34,6 +34,7 @@ export default function WorkoutFormItem({ label, isSelect, onSelect, placeholder
                     type="number"
                     min="0"
                     step="0.1"
+                    required
                 />
             )}
         </div>

@@ -5,7 +5,7 @@ import { mapActions } from "../store/map-slice";
 import { dataActions } from "../store/data-slice";
 import { useRef } from "react";
 
-export default function WorkoutForm({ isUpdate, id, type, distance, duration, cadence, elev_gain }) {
+export default function WorkoutForm({ isUpdate, workoutItem }) {
     const formRef = useRef();
     const workouts = useSelector(state => state.data.workouts);
     const position = useSelector(state => state.map.position);
@@ -13,6 +13,8 @@ export default function WorkoutForm({ isUpdate, id, type, distance, duration, ca
     const dispatch = useDispatch();
 
     const [workoutType, setWorkoutType] = useState("running");
+
+    const { id, type, distance, duration, cadence, elev_gain } = workoutItem || {};
 
     const selectHandler = (e) => {
         setWorkoutType(e.target.value);
@@ -31,19 +33,34 @@ export default function WorkoutForm({ isUpdate, id, type, distance, duration, ca
         const fd = new FormData(e.target);
         const data = Object.fromEntries(fd);
 
-        const timestamp = Date.now();
         const pace = data.type === "running" ? data.duration / data.distance : data.distance / (data.duration / 60);
 
-        data.id = timestamp;
-        data.timestamp = timestamp;
-        data.position = position;
-        data.pace = pace;
+        let updatedWorkouts;
 
-        const updatedWorkouts = [...workouts, data];
+        if (isUpdate) {
+            const updatedWorkout = { ...workoutItem, ...data, pace };
+
+            updatedWorkouts = [
+                ...(workouts.filter(w => w.id !== id)),
+                updatedWorkout
+            ];
+
+            dispatch(dataActions.setIsEditing(null));
+
+        } else {
+            const timestamp = Date.now();
+            data.id = timestamp;
+            data.timestamp = timestamp;
+            data.position = position;
+            data.pace = pace;
+
+            updatedWorkouts = [...workouts, data];
+            dispatch(mapActions.setIsAdding(false));
+            dispatch(mapActions.setPosition(null));
+        }
+
         localStorage.setItem("workouts", JSON.stringify(updatedWorkouts));
         dispatch(dataActions.updateWorkout(updatedWorkouts));
-        dispatch(mapActions.setIsAdding(false));
-        dispatch(mapActions.setPosition(null));
 
         formRef.current.reset();
     }

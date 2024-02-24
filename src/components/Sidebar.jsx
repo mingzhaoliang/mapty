@@ -12,7 +12,7 @@ export default function Sidebar() {
             {workouts && workouts.length > 0 && (
                 <ul className="flex flex-col gap-4 overflow-y-auto overflow-x-clip mb-12">
                     {workouts.map(workout => (
-                        <WorkoutItem key={workout.id} {...workout} />
+                        <WorkoutItem key={workout.id} item={workout} />
                     ))}
                 </ul>
             )}
