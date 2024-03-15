@@ -19,7 +19,7 @@ export default function WorkoutFormItem({ label, isSelect, onSelect, placeholder
 
     useEffect(() => {
         value && (inputField.current.value = value);
-    }, [])
+    }, [value])
 
     return (
         <div className="flex items-center">

@@ -21,7 +21,6 @@ export default function WorkoutItem({ item }) {
 
     const dispatch = useDispatch();
     const isEditing = useSelector(state => state.data.isEditing);
-    const selectedWorkoutPosition = useSelector(state => state.map.selectedWorkoutPosition);
     // const workouts = useSelector(state => state.data.workouts);
 
     const [isHovered, setIsHovered] = useState(false);

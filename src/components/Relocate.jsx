@@ -15,7 +15,7 @@ export default function Relocate() {
             dispatch(mapActions.setRelocate(false));
         });
 
-    }, [relocate])
+    }, [relocate, dispatch, map])
 
     return null;
 }

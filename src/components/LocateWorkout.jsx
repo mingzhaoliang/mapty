@@ -10,7 +10,7 @@ export default function LocateWorkout() {
         if (selectedWorkoutPosition) {
             map.flyTo(selectedWorkoutPosition, map.getZoom());
         }
-    }, [selectedWorkoutPosition]);
+    }, [selectedWorkoutPosition, map]);
 
     return null;
 }
