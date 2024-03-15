@@ -1,4 +1,4 @@
-import { useMap, useMapEvent } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { mapActions } from '../store/map-slice';

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function LocateWorkout() {
     const map = useMap();

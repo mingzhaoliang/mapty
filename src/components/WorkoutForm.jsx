@@ -4,7 +4,6 @@ import WorkoutFormItem from "./WorkoutFormItem";
 import { mapActions } from "../store/map-slice";
 import { dataActions } from "../store/data-slice";
 import { useRef } from "react";
-import { API_KEY } from '../api-key';
 import Modal from "./UI/Modal";
 
 export default function WorkoutForm({ isUpdate, workoutItem }) {
@@ -23,7 +22,7 @@ export default function WorkoutForm({ isUpdate, workoutItem }) {
 
     const fetchAddress = async (lat, lng) => {
         try {
-            const response = await fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${lng}&api_key=${API_KEY}`);
+            const response = await fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${lng}&api_key=${process.env.REACT_APP_API_KEY}`);
             const place = await response.json();
             console.log(response, place)
 

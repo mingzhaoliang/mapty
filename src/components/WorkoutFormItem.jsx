@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import slugify from 'slugify';
 import { dataActions } from '../store/data-slice';

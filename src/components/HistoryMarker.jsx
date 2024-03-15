@@ -1,7 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 const defaultIcon = new Icon({
     iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",

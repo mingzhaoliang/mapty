@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { dataActions } from "../store/data-slice";
-import { useSelector } from "react-redux";
 import Modal from "./UI/Modal";
 
 export default function Utilities() {
