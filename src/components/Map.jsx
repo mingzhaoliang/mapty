@@ -5,6 +5,7 @@ import Relocate from './Relocate';
 import { useSelector } from 'react-redux';
 import HistoryMarker from './HistoryMarker';
 import LocateWorkout from './LocateWorkout';
+import Spinner from './UI/Spinner';
 
 
 export default function Map() {
@@ -35,6 +36,11 @@ export default function Map() {
                     <LocationMarker />
                     {workouts && workouts.map(({ type, timestamp, position }) => <HistoryMarker key={timestamp} type={type} timestamp={timestamp} position={position} />)}
                 </MapContainer>
+            )}
+            {!initialPosition && (
+                <div className='flex justify-center items-center h-screen w-8/12 min-w-[100%-460px]'>
+                    <Spinner />
+                </div>
             )}
         </>
     )
